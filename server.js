@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const logger = require('./server/logger');
-const routes = require('./server/routes');
+const logger = require('./app/logger');
+const routes = require('./app/routes');
 
 const DEFAULT_BODY_SIZE_LIMIT = 1024 * 1024 * 10;
 const DEFAULT_PARAMETER_LIMIT = 10000;
@@ -27,12 +27,7 @@ const init = () => {
     .use(bodyParser.json(bodyParserJsonConfig()))
     .use(bodyParser.urlencoded(bodyParserUrlencodedConfig()));
 
-  const port = 8080;
-
-  app.get('/', (req, res) => {
-    logger.info('Healthcheck ok');
-    res.json({});
-  });
+  const port = 8080; // @TODO: Remove hardcoded port and replace it for .env value
 
   routes.init(app);
 
