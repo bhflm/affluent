@@ -3,9 +3,8 @@ const queryString = require('querystring');
 const logger = require('../logger');
 const config = require('../config');
 
-exports.getUsers = async (params = {}) => {
-  // console.log('PARAMS: ', params);
-  const queryOptions = '?page=1'; // @@TODO: queryBuilder
+exports.getUsers = async (params) => {
+  const queryOptions = params || '';
   const pathWithQuery = `/api/users${queryOptions}`;
   try {
     logger.info(`Querying reqress service @ ${pathWithQuery}`);
@@ -13,10 +12,10 @@ exports.getUsers = async (params = {}) => {
     const { data: rawResponse } = serviceResponse;
     let response = [];
     if (rawResponse.data) {
-      const { data: usersData } = rawResponse;
-      response = usersData;
+      console.log(rawResponse);
+      const { data: usersData, total_pages: totalPages, page } = rawResponse;
+      response = { usersData, totalPages, page };
     }
-    console.log('users data; ', response);
     return response;
   } catch (err) {
     logger.error(`Error requesting data from reqress service @ ${pathWithQuery}`);

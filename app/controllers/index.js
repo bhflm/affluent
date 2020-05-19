@@ -9,7 +9,6 @@ exports.serveSiteData = async (req, res) => {
     const reqresRespponse = await reqresService.getUsers();
     // We insert them onto the database,
 
-
     return res.json({});
   } catch (err) {
     logger.error(`Error: ${err}`);
