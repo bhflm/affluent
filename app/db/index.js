@@ -24,7 +24,7 @@ const checkTables = async (db) => {
   }
 };
 
-const initializeDB = async () => {
+exports.initializeDB = async () => {
   logger.info('Initializing database');
   try {
     const db = await mysql.createConnection(config.DB);
@@ -34,12 +34,10 @@ const initializeDB = async () => {
       await metricsModel.createTable(db);
     }
     logger.info('Success initializing database');
-    return await db.end();
+    return db;
   }
   catch(error) {
     logger.error(`Error initializing database: ${error}`);
     return Promise.reject(error);
   }
 };
-
-initializeDB();

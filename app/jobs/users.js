@@ -1,7 +1,7 @@
 const logger = require('../logger');
 const reqresService = require('../services/reqres');
 
-const getAllUsers = async () => {
+exports.fetchAllUsers = async () => {
   try {
     // Fetch all users from reqres service;
     let users;
@@ -23,7 +23,3 @@ const getAllUsers = async () => {
     return Promise.reject(err);
   };
 };
-
-
-
-getAllUsers();

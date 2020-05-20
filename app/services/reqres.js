@@ -12,7 +12,6 @@ exports.getUsers = async (params) => {
     const { data: rawResponse } = serviceResponse;
     let response = [];
     if (rawResponse.data) {
-      console.log(rawResponse);
       const { data: usersData, total_pages: totalPages, page } = rawResponse;
       response = { usersData, totalPages, page };
     }
