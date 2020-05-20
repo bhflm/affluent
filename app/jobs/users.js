@@ -2,20 +2,23 @@ const logger = require('../logger');
 const usersService = require('../services/users');
 const dbClient = require('../db');
 const usersModel = require('../db/users');
-const { rawDataToBulkFormat } = require('../helpers');
+const { prepareUsersRawData } = require('../helpers');
 
 const asyncFetchAndStore = async (dbRef, { currentPage = null, usersRemaining = null }) => {
-  // End recursive fetchAndStore if there are no users left
   try {
-    if (typeof usersRemaining === 'number' && usersRemaining <= 0) return;
+    if (typeof usersRemaining === 'number' && usersRemaining <= 0) {
+      // If there are no users left we close the connection and end
+      await dbRef.end();
+      return;
+    }
     const query = `?page=${currentPage || 1}`;
     const usersResponse = await usersService.getUsers(query);
     const { page, usersPerPage, usersTotal } = usersResponse;
-    // if users remaining is undef, means it is the first execution
+    // If users remaining is undef, means it is the first execution
     let remaining = usersRemaining || usersTotal;
     if (usersResponse.data) {
-      const users = rawDataToBulkFormat(usersResponse.data);
-      // await usersModel.bulkInsert(dbRef, users);
+      const users = prepareUsersRawData(usersResponse.data);
+      await users.map(newUser => usersModel.insertOne(dbRef, newUser))
       remaining -= usersPerPage * page;
     }
     await asyncFetchAndStore(dbRef, { currentPage: page + 1, usersRemaining: remaining });
@@ -27,13 +30,12 @@ const asyncFetchAndStore = async (dbRef, { currentPage = null, usersRemaining = 
 
 exports.fetchAndStoreUsers = async dbRef => {
   try {
-
     logger.info('Populating database with users data');
     // Fetch all users from reqres service;
     await asyncFetchAndStore(dbRef, {});
-    return [];
+    return true;
   } catch (err) {
     logger.error(`Error: ${err}`);
     return Promise.reject(err);
-  };
+  }
 };
