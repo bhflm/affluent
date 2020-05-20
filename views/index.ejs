@@ -38,14 +38,16 @@
         <% if (users && users.length > 0) {%>
         <div class="container">
           <div class="row">
+            <div class="border border-dark col-md-2 font-weight-bold">Avatar</div>
+            <div class="border border-dark col-md-2 font-weight-bold">First name</div>
+            <div class="border border-dark col-md-2 font-weight-bold">First name</div>
             <div class="border border-dark col-md-4 font-weight-bold">Email</div>
-            <div class="border border-dark col-md-4 font-weight-bold">First name</div>
-            <div class="border border-dark col-md-4 font-weight-bold">Last name</div>
           </div>
           <% users.forEach((user) => { %>
             <div class="row">
-                <div class="border border-top-0 border-secondary col-md-4"><%= user.first_name %></div>
-                <div class="border border-top-0 border-secondary col-md-4"><%= user.last_name %></div>
+                <div class="border border-top-0 border-secondary col-md-2"><img src="<%= user.avatar %>" class="img-circle" style="width: 30px; height: 30px;"></div>
+                <div class="border border-top-0 border-secondary col-md-2"><%= user.first_name %></div>
+                <div class="border border-top-0 border-secondary col-md-2"><%= user.last_name %></div>
                 <div class="border border-top-0 border-secondary col-md-4"><%= user.email %></div>
             </div>
           <% }) %>
