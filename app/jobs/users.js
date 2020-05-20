@@ -1,5 +1,5 @@
 const logger = require('../logger');
-const reqresService = require('../services/users');
+const usersService = require('../services/users');
 const dbClient = require('../db');
 const usersModel = require('../db/users');
 const { rawDataToBulkFormat } = require('../helpers');
@@ -9,7 +9,7 @@ const asyncFetchAndStore = async (dbRef, { currentPage = null, usersRemaining = 
   try {
     if (typeof usersRemaining === 'number' && usersRemaining <= 0) return;
     const query = `?page=${currentPage || 1}`;
-    const usersResponse = await reqresService.getUsers(query);
+    const usersResponse = await usersService.getUsers(query);
     const { page, usersPerPage, usersTotal } = usersResponse;
     // if users remaining is undef, means it is the first execution
     let remaining = usersRemaining || usersTotal;
