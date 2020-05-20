@@ -3,7 +3,7 @@ const queryString = require('querystring');
 const logger = require('../logger');
 const config = require('../config');
 
-exports.getUsers = async (params) => {
+exports.getUsers = async params => {
   const queryOptions = params || '';
   const pathWithQuery = `/api/users${queryOptions}`;
   try {
@@ -12,8 +12,8 @@ exports.getUsers = async (params) => {
     const { data: rawResponse } = serviceResponse;
     let response = [];
     if (rawResponse.data) {
-      const { data: usersData, total_pages: totalPages, page } = rawResponse;
-      response = { usersData, totalPages, page };
+      const { data, total_pages: totalPages, page, per_page: usersPerPage, total: usersTotal } = rawResponse;
+      response = { data, totalPages, page, usersPerPage, usersTotal };
     }
     return response;
   } catch (err) {
