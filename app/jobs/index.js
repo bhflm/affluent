@@ -8,8 +8,7 @@ const initializeApp = async () => {
   try {
     // Initialize database;
     const dbRef = await dbClient.initializeDB();
-    // Fetch all users from reqres service;
-    logger.info('Fetching all users from external service');
+    logger.info('Fetching and storing all users from external service');
     // await usersJobs.fetchAndStoreUsers(dbRef);
     // @TODO: Fetch all data from scrapped website;
     // @TODO: Hydrate with db data html template;
