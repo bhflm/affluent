@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('./app/logger');
-const routes = require('./app/routes');
 
 const DEFAULT_BODY_SIZE_LIMIT = 1024 * 1024 * 10;
 const DEFAULT_PARAMETER_LIMIT = 10000;
@@ -21,15 +20,21 @@ const bodyParserUrlencodedConfig = () => ({
 const init = () => {
   // Set up the express app
   const app = express();
+
+  // set the view engine to ejs
+  app.set('view engine', 'ejs');
   // Log requests to the console.
   app
     .use(cors())
     .use(bodyParser.json(bodyParserJsonConfig()))
-    .use(bodyParser.urlencoded(bodyParserUrlencodedConfig()));
+    .use(bodyParser.urlencoded(bodyParserUrlencodedConfig()))
 
   const port = 8080; // @TODO: Remove hardcoded port and replace it for .env value
 
-  routes.init(app);
+
+  app.get('/', (req, res) => {
+    return res.render('index');
+  });
 
   app.listen(port);
 
