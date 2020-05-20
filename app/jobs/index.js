@@ -9,16 +9,29 @@ const initializeApp = async () => {
     // Initialize database;
     const dbRef = await dbClient.initializeDB();
     logger.info('Fetching and storing all users from external service');
-    // await usersJobs.fetchAndStoreUsers(dbRef);
+    await usersJobs.fetchAndStoreUsers(dbRef);
     // @TODO: Fetch all data from scrapped website;
     // @TODO: Hydrate with db data html template;
     return {};
-  } catch (err) {
-    logger.error(`${err}`);
-    return Promise.reject(err);
+  } catch (error) {
+    logger.error(`${error}`);
+    return Promise.reject(error);
+  }
+};
+
+exports.fetchToRenderData = async () => {
+  try {
+    const dbRef = await dbClient.newDBConnection();
+    const usersData = await usersModel.getAll(dbRef);
+    await dbRef.end();
+    return { users: usersData };
+  }
+  catch(error) {
+    logger.error(`${error}`);
+    return Promise.reject(error);
   }
 };
 
 
-
-initializeApp();
+// fetchToRenderData();
+// initializeApp();

@@ -41,3 +41,15 @@ exports.initializeDB = async () => {
     return Promise.reject(error);
   }
 };
+
+exports.newDBConnection = async () => {
+  logger.info('Creating new connection');
+  try {
+    const db = await mysql.createConnection(config.DB);
+    return db;
+  }
+  catch (error) {
+    logger.error(`Error creating database connection: ${error}`);
+    return Promise.reject(error);
+  }
+};

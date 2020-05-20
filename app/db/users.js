@@ -4,7 +4,7 @@ const logger = require('../logger');
 exports.createTable = async db => {
   logger.info('Initializing users table');
   const statement =
-    'CREATE TABLE `users` (id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, email VARCHAR(30), last_name VARCHAR(20), first_name VARCHAR(20), avatar VARCHAR(50))';
+    'CREATE TABLE `users` (id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, email VARCHAR(30), last_name VARCHAR(20), first_name VARCHAR(20), avatar VARCHAR';
   try {
     const queryRes = await db.query(statement);
     logger.info('Success creating users table');
@@ -33,7 +33,7 @@ exports.createTable = async db => {
 
 exports.insertOne = async (db, params) => {
   logger.info('Inserting one user');
-  const statement = 'INSERT INTO `users` (`first_name`, `last_name`, `email`, `avatar`) VALUES (?, ?, ?, ?)';
+  const statement = 'INSERT INTO `users` (`email`, `last_name`, `first_name`, `avatar`) VALUES (?, ?, ?, ?)';
   try {
     const [rows, fields] = await db.execute(statement, params);
     return rows;

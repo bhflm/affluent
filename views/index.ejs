@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Super Awesome</title>
+  <title>Affluent.io developer test</title>
 
   <!-- CSS (load bootstrap from a CDN) -->
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <style>
       body    { padding-top:50px; }
   </style>
@@ -16,28 +16,48 @@
 <header>
   <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
-
       <div class="navbar-header">
-          <a class="navbar-brand" href="#">
-              <span class="glyphicon glyphicon glyphicon-tree-deciduous"></span>
-              EJS Is Fun
-          </a>
-
-          <ul class="nav navbar-nav">
-              <li><a href="/">Home</a></li>
-              <li><a href="/about">About</a></li>
-          </ul>
+          <div class="row" href="#">
+                <svg class="bi bi-file-spreadsheet" width="40px" height="40px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M4 1h8a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V3a2 2 0 012-2zm0 1a1 1 0 00-1 1v10a1 1 0 001 1h8a1 1 0 001-1V3a1 1 0 00-1-1H4z" clip-rule="evenodd"/>
+                  <path fill-rule="evenodd" d="M13 6H3V5h10v1zm0 3H3V8h10v1zm0 3H3v-1h10v1z" clip-rule="evenodd"/>
+                  <path fill-rule="evenodd" d="M5 14V6h1v8H5zm4 0V6h1v8H9z" clip-rule="evenodd"/>
+                </svg>
+                <h3>
+                  Users and Metrics
+                </h3>
+          </div>
       </div>
-
   </div>
   </nav>
 </header>
 
 <main>
     <div class="jumbotron">
-        <h1>This is great</h1>
-        <p>Welcome to templating using EJS</p>
+        <h3>Users</h3>
+        <% if (users && users.length > 0) {%>
+        <div class="container">
+          <div class="row">
+            <div class="border border-dark col-md-4 font-weight-bold">Email</div>
+            <div class="border border-dark col-md-4 font-weight-bold">First name</div>
+            <div class="border border-dark col-md-4 font-weight-bold">Last name</div>
+          </div>
+          <% users.forEach((user) => { %>
+            <div class="row">
+                <div class="border border-top-0 border-secondary col-md-4"><%= user.first_name %></div>
+                <div class="border border-top-0 border-secondary col-md-4"><%= user.last_name %></div>
+                <div class="border border-top-0 border-secondary col-md-4"><%= user.email %></div>
+            </div>
+          <% }) %>
+        </div>
+        <% } else { %>
+          <div>
+            No users data available
+          </div>
+        <% } %>
+
     </div>
+
 </main>
 
 
