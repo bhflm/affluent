@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const config = require('./app/config');
 const logger = require('./app/logger');
 const jobs = require('./app/jobs');
 
@@ -29,11 +30,10 @@ const init = async () => {
     .use(bodyParser.json(bodyParserJsonConfig()))
     .use(bodyParser.urlencoded(bodyParserUrlencodedConfig()))
 
-  const port = 8080; // @TODO: Remove hardcoded port and replace it for .env value
+  const port = config.PORT || 8080; // @TODO: Remove hardcoded port and replace it for .env value
 
   const { users } = await jobs.fetchToRenderData();
 
-  console.log('users and metrics data', users);
   app.get('/', (req, res) => {
     return res.render('index', { users });
   });

@@ -23,6 +23,7 @@ exports.fetchToRenderData = async () => {
   try {
     const dbRef = await dbClient.newDBConnection();
     const usersData = await usersModel.getAll(dbRef);
+    // const metricsData = await metricsModel.getAll(dbRef);
     await dbRef.end();
     return { users: usersData };
   }
