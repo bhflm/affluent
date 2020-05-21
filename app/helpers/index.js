@@ -10,23 +10,16 @@ exports.prepareUsersRawData = rawData =>
 
 exports.prepareMetricsData = data => {
 	const row = data.split('\t');
-	return [
-		transformJSDateToMYSQL(row[0]),
-		row[1].replace('$',''),
-		row[2],
-		row[3],
-		row[4],
-		row[5].replace('$',''),
-		row[6],
-		row[7].replace('%','')
-	];
+  console.log('ROW: ', row);
+  return row;
+	// return [
+	// 	transformJSDateToMYSQL(row[0]),
+	// 	row[1].replace('$',''),
+	// 	row[2],
+	// 	row[3],
+	// 	row[4],
+	// 	row[5].replace('$',''),
+	// 	row[6],
+	// 	row[7].replace('%','')
+	// ];
 };
-
-exports.formattedMetrics = metrics => metrics.map(metric => ({
-    ...metric,
-    ...{ date: new Date(metric.date).toISOString().slice(0,10),
-    comission: `$${metric.comission.toFixed(2)}`,
-    epc: `$${metric.epc.toFixed(2)}`,
-    comission_rate: `%${metric.comission_rate}`}
-  })
-)

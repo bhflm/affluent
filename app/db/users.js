@@ -3,9 +3,8 @@ const logger = require('../logger');
 
 exports.createTable = async db => {
   logger.info('Initializing users table');
-  const statement =
-    'CREATE TABLE `users` (id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, email VARCHAR(30), last_name VARCHAR(20), first_name VARCHAR(20), avatar VARCHAR';
   try {
+    const statement = 'CREATE TABLE `users`(id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, email VARCHAR(30), last_name VARCHAR(20), first_name VARCHAR(20), avatar VARCHAR(40))';
     const queryRes = await db.query(statement);
     logger.info('Success creating users table');
     return queryRes;

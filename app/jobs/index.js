@@ -13,7 +13,7 @@ const initializeApp = async () => {
     // Initialize database;
     const metricsTargetDate = 'main?startDate=2020-04-01&endDate=2020-04-30';
     const dbRef = await dbClient.initializeDB();
-    await usersJobs.fetchAndStoreUsers(dbRef);
+    // await usersJobs.fetchAndStoreUsers(dbRef);
     await metricsJobs.scrapAndStoreMetrics(dbRef, config.METRICS, metricsTargetDate)
     // @TODO: Fetch all data from scrapped website;
     // @TODO: Hydrate with db data html template;
@@ -31,7 +31,7 @@ exports.fetchToRenderData = async () => {
     const metricsData = await metricsModel.getAll(dbRef);
     await dbRef.end();
     // return { users: usersData };
-    return { metrics: formattedMetrics(metricsData) };
+    return { metrics: metricsData };
   }
   catch(error) {
     logger.error(`${error}`);
@@ -42,4 +42,4 @@ exports.fetchToRenderData = async () => {
 
 
 // fetchToRenderData();
-// initializeApp();
+initializeApp();
