@@ -33,7 +33,6 @@ exports.initializeDB = async () => {
       await usersModel.createTable(db);
       await metricsModel.createTable(db);
     }
-    logger.info('Success initializing database');
     return db;
   }
   catch(error) {
@@ -53,3 +52,15 @@ exports.newDBConnection = async () => {
     return Promise.reject(error);
   }
 };
+
+exports.tableIsEmpty = async (db, tableName) => {
+  logger.info(`Checking if table ${tableName} is empty`);
+  const statement = `SELECT 1 FROM ${tableName} LIMIT 1`;
+  try {
+    const [rows, fields] = await db.execute(statement);
+    return rows.length == 0;
+  } catch (error) {
+    logger.error(`Error checking table existance: ${error}`);
+    return Promise.reject(error);
+  }
+}

@@ -31,9 +31,11 @@ const init = async () => {
     .use(bodyParser.urlencoded(bodyParserUrlencodedConfig()))
 
   const port = config.PORT || 8080;
-  const users = [];
-  const { metrics } = await jobs.fetchToRenderData();
-  app.get('/', (req, res) => {
+
+  await jobs.initializeApp()
+
+  app.get('/', async (req, res) => {
+    const { metrics, users } = await jobs.fetchUsersAndMetricsData();
     return res.render('index', { metrics, users });
   });
 

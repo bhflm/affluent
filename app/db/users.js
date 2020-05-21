@@ -4,13 +4,13 @@ const logger = require('../logger');
 exports.createTable = async db => {
   logger.info('Initializing users table');
   try {
-    const statement = 'CREATE TABLE `users`(id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, email VARCHAR(30), last_name VARCHAR(20), first_name VARCHAR(20), avatar VARCHAR(40))';
+    const statement = 'CREATE TABLE `users`(id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, email VARCHAR(30), last_name VARCHAR(20), first_name VARCHAR(20), avatar TEXT)';
     const queryRes = await db.query(statement);
     logger.info('Success creating users table');
     return queryRes;
   }
   catch(error) {
-    logger.error(`Error executing statement within users table ${error}`);
+    logger.error(`Error creating users table ${error}`);
     return Promise.reject(error);
   }
 };
@@ -38,7 +38,7 @@ exports.insertOne = async (db, params) => {
     return rows;
   }
   catch(error) {
-    logger.error(`Error executing statement within users table ${error}`);
+    logger.error(`Error inserting one user ${error}`);
     return Promise.reject(error);
   }
 };
@@ -52,7 +52,7 @@ exports.getAll = async db => {
     return rows;
   }
   catch(error) {
-    logger.error(`Error executing statement within users table ${error}`);
+    logger.error(`Error getting all users ${error}`);
     return Promise.reject(error);
   }
 };
