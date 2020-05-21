@@ -27,6 +27,11 @@ As there's no "production" environment i just left the script to run `npm run de
 After this access to the view file is available from **localhost:8080**
 (if Port 8080 wasn't modified, in that case, use your favorite port )
 
+If everything went well, you should be able to see something similar to this:
+
+<img alt="preview" src="./preview_1.jpg">
+
+<img alt="preview" src="./preview_2.jpg">
 
 ### Environments
 
