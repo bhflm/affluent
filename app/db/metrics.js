@@ -28,3 +28,17 @@ exports.insertOne = async (db, params) => {
     return Promise.reject(error);
   }
 };
+
+exports.getAll = async db => {
+  logger.info('Getting all metrics');
+  const statement =
+    'SELECT * FROM `metrics`';
+  try {
+    const [rows, fields] = await db.execute(statement);
+    return rows;
+  }
+  catch(error) {
+    logger.error(`Error executing statement within metrics table ${error}`);
+    return Promise.reject(error);
+  }
+};

@@ -4,14 +4,12 @@ const logger = require('../logger');
 const dbClient = require('../db');
 const metricsModel = require('../db/metrics');
 const { prepareMetricsData } = require('../helpers');
-const metricsModel = require('../db/metrics');
-
 const {
   USERNAME_LOGIN,
   PWD_LOGIN,
   LOGIN_BUTTON,
   DATA_TABLE,
-  DATA_TABLE_TAB_SELECTOR,
+  DATA_TABLE_TAB,
   FIRST_DATA_TABLE_TAB
 } = require('./selectors');
 
@@ -21,11 +19,11 @@ exports.startBrowser = async () => {
   return { browser, page };
 }
 
-const closeBrowser = async browser => {
+exports.closeBrowser = async browser => {
   return browser.close();
 }
 
-const logIn = async (page, url, username, password) => {
+exports.logIn = async (page, url, username, password) => {
   try {
     logger.info('Logging in to website');
     page.setViewport({ width: 1366, height: 768 });
@@ -42,12 +40,13 @@ const logIn = async (page, url, username, password) => {
   }
 }
 
-exports.fetchAndStoreTabs = async (page, dbRef, currentTab = null) => {
+
+const fetchAndStoreTabs = async (page, dbRef, currentTab = null) => {
   logger.info('Fetching and storing data table');
   try {
     if (currentTab == false) return
     const current = currentTab || FIRST_DATA_TABLE_TAB;
-    const tab = await page.$(DATA_TABLE_TAB_SELECTOR(current));
+    const tab = await page.$(DATA_TABLE_TAB(current));
     let tabsData = [];
     if (tab) {
       await tab.click();
@@ -66,6 +65,19 @@ exports.fetchAndStoreTabs = async (page, dbRef, currentTab = null) => {
     await fetchAndStoreTabs(page, dbRef, false);
   } catch (error) {
     logger.error(`Error fetching and storing tabs data ${error}`);
+    Promise.reject(error);
+  }
+};
+
+exports.crawlTableAndStoreData = async (page, dbRef, targetUrl) => {
+  logger.info('Scraping metrics');
+  try {
+    await page.goto(targetUrl);
+    await page.waitForSelector(DATA_TABLE);
+    await fetchAndStoreTabs(page, dbRef);
+    logger.info('Success fetching metrics data');
+  } catch (error) {
+    logger.error(`Error while fetching metrics: ${error}`);
     Promise.reject(error);
   }
 };

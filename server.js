@@ -31,11 +31,11 @@ const init = async () => {
     .use(bodyParser.urlencoded(bodyParserUrlencodedConfig()))
 
   const port = config.PORT || 8080; // @TODO: Remove hardcoded port and replace it for .env value
-
-  const { users } = await jobs.fetchToRenderData();
-
+  const users = [];
+  const { metrics } = await jobs.fetchToRenderData();
+  console.log('METRICS: ', metrics);
   app.get('/', (req, res) => {
-    return res.render('index', { users });
+    return res.render('index', { metrics, users });
   });
 
   app.listen(port);

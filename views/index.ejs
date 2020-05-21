@@ -59,6 +59,40 @@
         <% } %>
     </div>
 
+    <div class="jumbotron">
+        <h3>Metrics</h3>
+        <% if (metrics && metrics.length > 0) {%>
+        <div class="container">
+          <div class="row">
+            <div class="border border-dark col font-weight-bold">Date</div>
+            <div class="border border-dark col font-weight-bold">Comission</div>
+            <div class="border border-dark col font-weight-bold">Sales</div>
+            <div class="border border-dark col font-weight-bold">Leads</div>
+            <div class="border border-dark col font-weight-bold">Clicks</div>
+            <div class="border border-dark col font-weight-bold">EPC</div>
+            <div class="border border-dark col font-weight-bold">Impressions</div>
+            <div class="border border-dark col font-weight-bold">CR</div>
+          </div>
+          <% metrics.forEach((metric) => { %>
+            <div class="row">
+                <div class="border border-top-0 border-secondary col"><%= metric.date %></div>
+                <div class="border border-top-0 border-secondary col"><%= metric.comission %></div>
+                <div class="border border-top-0 border-secondary col"><%= metric.sales %></div>
+                <div class="border border-top-0 border-secondary col"><%= metric.leads %></div>
+                <div class="border border-top-0 border-secondary col"><%= metric.clicks %></div>
+                <div class="border border-top-0 border-secondary col"><%= metric.epc %></div>
+                <div class="border border-top-0 border-secondary col"><%= metric.impressions %></div>
+                <div class="border border-top-0 border-secondary col"><%= metric.comission_rate %></div>
+            </div>
+          <% }) %>
+        </div>
+        <% } else { %>
+          <div>
+            No metrics data available
+          </div>
+        <% } %>
+    </div>
+
 </main>
 
 

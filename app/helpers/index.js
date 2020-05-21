@@ -21,3 +21,12 @@ exports.prepareMetricsData = data => {
 		row[7].replace('%','')
 	];
 };
+
+exports.formattedMetrics = metrics => metrics.map(metric => ({
+    ...metric,
+    ...{ date: new Date(metric.date).toISOString().slice(0,10),
+    comission: `$${metric.comission.toFixed(2)}`,
+    epc: `$${metric.epc.toFixed(2)}`,
+    comission_rate: `%${metric.comission_rate}`}
+  })
+)
