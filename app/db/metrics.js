@@ -15,3 +15,16 @@ exports.createTable = async db => {
     return Promise.reject(error);
   }
 };
+
+exports.insertOne = async (db, params) => {
+  logger.info('Inserting metric');
+  const statement = 'INSERT INTO `metrics` (`date`, `comission`, `sales`, `leads`, `clicks`, `epc`, `impressions`, `comission_rate`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+  try {
+    const [rows, fields] = await db.execute(statement, params);
+    return rows;
+  }
+  catch(error) {
+    logger.error(`Error executing statement within metrics table ${error}`);
+    return Promise.reject(error);
+  }
+};
