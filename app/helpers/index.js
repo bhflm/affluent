@@ -8,7 +8,7 @@ exports.prepareUsersRawData = rawData =>
     return userValues.slice(1, userValues.length);
   });
 
-exports.prepareRowData = data => {
+exports.prepareMetricsData = data => {
 	const row = data.split('\t');
 	return [
 		transformJSDateToMYSQL(row[0]),
